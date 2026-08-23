@@ -38,6 +38,7 @@ nav:
   - OQP Studio:
       - Overview: studio/index.md
       - Installation: studio/installation.md
+      - Standalone and integrated packages: studio/packages.md
       - Builder and Workflows: studio/builder-workflows.md
       - Execution and Projects: studio/execution.md
       - Analysis: studio/analysis.md

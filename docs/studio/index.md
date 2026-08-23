@@ -53,5 +53,6 @@ generates concise `.oqp` input; it does not generate legacy sectioned input.
 5. Open the completed project in **Analysis** and inspect **Results summary** and
    **Project files**.
 
-Continue with [installation](installation.md), or go directly to
+Continue with [installation](installation.md), compare
+[standalone and integrated packages](packages.md), or go directly to
 [Builder and Workflows](builder-workflows.md).
