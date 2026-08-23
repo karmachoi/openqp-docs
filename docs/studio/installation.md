@@ -1,9 +1,15 @@
 # Installing OQP Studio
 
 Installers are published on the
-[OQP Studio releases page](https://github.com/Open-Quantum-Platform/oqp-studio/releases).
+[OpenQP releases page](https://github.com/Open-Quantum-Platform/openqp/releases).
+Each compatible OpenQP release carries the standalone engine, standard Studio
+application, and integrated Studio application together.
 For an application that can calculate without downloading OpenQP later, choose
 an asset whose name contains `with-engine`.
+
+Before downloading, see [Standalone and integrated packages](packages.md) for
+the distinction between the standard Studio application, the standalone
+command-line OpenQP engine, and the `with-engine` integrated application.
 
 ## macOS
 
@@ -85,6 +91,10 @@ selected.
 
 The plain installer obtains an engine on demand through **Execution > Install
 compute engine**. A `with-engine` installer avoids that network step.
+
+For complete standalone extraction commands, platform-specific asset names,
+checksum verification, and update behavior, see
+[Standalone and integrated packages](packages.md).
 
 ## Python package
 
