@@ -35,6 +35,14 @@ nav:
   - Installation: installation.md
   - Build Options: build-options.md
   - Quickstart: quickstart.md
+  - OQP Studio:
+      - Overview: studio/index.md
+      - Installation: studio/installation.md
+      - Builder and Workflows: studio/builder-workflows.md
+      - Execution and Projects: studio/execution.md
+      - Analysis: studio/analysis.md
+      - Art Rendering: studio/art.md
+      - Troubleshooting: studio/troubleshooting.md
   - Input Styles:
       - .oqp Input: oqp-input.md
       - Legacy .inp: input-file.md
