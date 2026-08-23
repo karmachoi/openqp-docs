@@ -1,9 +1,11 @@
 # `[oqp]`
 
-The `[oqp]` section stores controls for the native OpenQP optimizer. Concise
-`.oqp` geometry drivers select this engine automatically and route their native
-options here; no `lib` selector is used. Traditional sectioned `.inp` files may
-still select it explicitly with `[optimize] lib=oqp`.
+The `[oqp]` section stores controls for the native OpenQP optimizer in
+traditional sectioned `.inp` input and the internal configuration assembled by
+the concise parser. In a concise `.oqp` file, write native geometry controls in
+the primary driver, for example `opt(coordsys=dlc,trust=0.1)`, never as a
+separate `oqp(...)` call. Traditional sectioned `.inp` files may still select
+the native engine explicitly with `[optimize] lib=oqp`.
 
 ## Keywords
 
@@ -16,13 +18,14 @@ still select it explicitly with `[optimize] lib=oqp`.
 | Used by | native optimizer coordinates |
 
 Coordinate system for the native optimizer. `auto` selects delocalized internal
-coordinates (DLC) for minimum, TS, MECI, MECP, TCI, NEB, IRC, and MEP
-calculations. The DLC basis must span the complete molecular vibrational space
-(`3N-6` for a non-linear isolated system); otherwise OpenQP uses its safer
-coordinate-recovery sequence. Molecular complexes are supplemented with
-interfragment distances when their primitive internal-coordinate metric is
-poorly conditioned. Explicit `tric`, `ric`, and Cartesian selections remain
-available as expert overrides.
+coordinates (DLC) for minimum, TS, MECI, MECP, and TCI calculations. MEP and IRC
+use their mass-weighted path coordinates, and NEB uses its Cartesian FIRE band;
+these three path drivers do not read `coordsys`. The DLC basis must span the
+complete molecular vibrational space (`3N-6` for a non-linear isolated system);
+otherwise OpenQP uses its safer coordinate-recovery sequence. Molecular
+complexes are supplemented with interfragment distances when their primitive
+internal-coordinate metric is poorly conditioned. Explicit `tric`, `ric`, and
+Cartesian selections remain available as expert overrides.
 
 ### `trust`
 
@@ -43,6 +46,41 @@ Initial trust radius.
 | Used by | optimizer trust radius |
 
 Maximum trust radius.
+
+### `auto_recovery`
+
+| Field | Value |
+| --- | --- |
+| Type | boolean |
+| Default | `True` |
+| Used by | native minimum, crossing-point, and TS optimizers |
+
+Enables the native optimizer's coordinate and trust-radius recovery attempts
+after an initial optimization attempt does not converge. In concise input,
+place it in the primary driver, for example `opt(auto_recovery=false)`.
+
+### `recovery_maxit`
+
+| Field | Value |
+| --- | --- |
+| Type | integer |
+| Default | `30` |
+| Used by | native optimizer recovery |
+
+Minimum iteration allowance for a recovery attempt. The value must be
+positive. In concise input, write it in `opt`, `meci`, `mecp`, `tci`, or `ts`.
+
+### `recovery_trust`
+
+| Field | Value |
+| --- | --- |
+| Type | float |
+| Default | `0.02` |
+| Used by | native optimizer recovery |
+
+Initial trust radius for a recovery attempt. The value must be finite and
+positive; the optimizer limits it against `trust_max`. In concise input, write
+it in `opt`, `meci`, `mecp`, `tci`, or `ts`.
 
 ### `freeze`
 

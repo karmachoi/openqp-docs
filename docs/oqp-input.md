@@ -280,9 +280,11 @@ lowers to the traditional
 lower respectively to `pen_sigma`, `pen_alpha`, `pen_delta`, `pen_jump`, and
 `energy_gap`; the historical multiplicative `pen_incre` key is not a BaekA
 control. `TCI` means the established legacy three-state controls `pen_sigma`,
-`pen_alpha`, `pen_incre`, and `gap_weight`. `ENGINE` means
-`coordsys`, `trust`, and `trust_max`; these apply to
-the native minimum, crossing-point, and transition-state optimizers. `NAMD`
+`pen_alpha`, `pen_incre`, and `gap_weight`. `ENGINE` means `coordsys`, `trust`,
+`trust_max`, `auto_recovery`, `recovery_maxit`, and `recovery_trust`; these
+apply to the native minimum, crossing-point, and transition-state optimizers.
+MEP and IRC own their path step and gradient threshold, while NEB owns its FIRE
+band controls; those drivers do not use `ENGINE`. `NAMD`
 means the current `[md]` controls `nstep`,
 `dt`, `active`, `substep`, `decoherence`, `edc_c`, `thrshe`, `tdc`, `trivial`,
 `trivial_thresh`, `init_temp`, `velocity`, `seed`, `rng_stream`,
@@ -452,14 +454,15 @@ a keyword-only call:
 ```text
 scf(conv=1e-8,maxit=100)
 cc(nfzc=1,conv=1e-7,maxit=60,ndiis=8)
-oqp(coordsys=tric,trust=0.2)
 properties(scf_prop=mulliken)
 tdhf(nvdav=30,zvconv=1e-7)
 ```
 
 Advanced exact calls include non-driver sections such as `input`, `guess`,
-`scf`, `mp2`, `cc`, `dftgrid`, `tdhf`, `properties`, `oqp`, `pcm`, `symmetry`,
-`json`, and `tests`. When a schema section is represented by a primary
+`scf`, `mp2`, `cc`, `dftgrid`, `tdhf`, `properties`, `pcm`, `symmetry`, `json`,
+and `tests`. `oqp(...)` is not a normal advanced call: it is accepted only as a
+read-time compatibility form for older concise inputs and is folded into the
+primary geometry driver. When a schema section is represented by a primary
 driver, put its public controls in that driver instead. The established schema
 remains authoritative for keyword spelling, type, allowed values, and
 cross-section constraints.
@@ -477,8 +480,9 @@ than repeating it through `input(soc_2e=...)`.
 
 When a section name is also a primary driver, put its options in that driver.
 For example, write `opt(S0,maxit=100,coordsys=tric,trust=0.2)`, not
-`opt(S0) optimize(maxit=100)`. An exact `oqp(...)` call remains available for
-advanced native controls, but do not specify the same control in both places.
+`opt(S0) optimize(maxit=100)`. Older `oqp(...)` calls are accepted only as a
+compatibility form and are rewritten into the primary driver when OpenQP
+renders canonical input; do not write them in new `.oqp` files.
 
 ## Physical States and Reserved Internal Keys
 
