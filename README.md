@@ -4,10 +4,11 @@ This repository contains the user manual for
 [OpenQP](https://github.com/Open-Quantum-Platform/openqp), the Open Quantum
 Platform.
 
-The manual covers installation, input files, Python usage, build options,
-capabilities, examples, keyword references, and workflows including HF/DFT,
-MP2, TDHF/TDDFT, SF-TDDFT, MRSF-TDDFT, PCM/ddX, SOC, NACME, EKT, Hessians,
-optimization, molecular symmetry, and spectroscopy-related properties.
+The manual covers the OQP Studio desktop application, installation, input
+files, Python usage, build options, capabilities, examples, keyword references,
+and workflows including HF/DFT, MP2, TDHF/TDDFT, SF-TDDFT, MRSF-TDDFT,
+PCM/ddX, SOC, NACME, EKT, Hessians, optimization, molecular symmetry, and
+spectroscopy-related properties.
 
 Manual site:
 [https://open-quantum-platform.github.io/openqp-docs/](https://open-quantum-platform.github.io/openqp-docs/)
