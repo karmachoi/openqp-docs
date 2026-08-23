@@ -47,20 +47,26 @@ choosing **More info > Run anyway**.
 Studio can use the bundled native Windows engine, a local OpenQP on `PATH`, or
 OpenQP in WSL. Native bundled execution is the simplest default.
 
+Native Windows OpenQP builds currently do not support ddX. Use an OpenQP build
+inside WSL for PCM/ddX calculations; other workflows can use the native bundled
+engine.
+
 ## Linux
 
 Use the package matching the release and distribution. A `.deb` can be
 installed with:
 
 ```bash
-sudo apt install ./OQP-Studio-<version>-linux-x86_64-with-engine.deb
+VERSION=0.2.2  # replace with the release being installed
+sudo apt install "./OQP-Studio-${VERSION}-linux-x86_64-with-engine.deb"
 ```
 
 For an AppImage, make the downloaded file executable before opening it:
 
 ```bash
-chmod +x OQP-Studio-<version>-linux-x86_64.AppImage
-./OQP-Studio-<version>-linux-x86_64.AppImage
+VERSION=0.2.2  # replace with the release being installed
+chmod +x "OQP-Studio-${VERSION}-linux-x86_64.AppImage"
+"./OQP-Studio-${VERSION}-linux-x86_64.AppImage"
 ```
 
 ## Engine choices

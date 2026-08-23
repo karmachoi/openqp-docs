@@ -56,8 +56,10 @@ PCM (ddX) cavity build failed: OpenQP was built without OQP_ENABLE_DDX
 ```
 
 comes from the selected OpenQP engine. Choose a bundled engine that includes
-ddX or rebuild the local engine with ddX enabled. This is independent of the
-Studio input form.
+ddX on macOS or Linux, or rebuild a local engine with ddX enabled on a supported
+platform. Native Windows OpenQP builds currently reject ddX; select a
+ddX-enabled WSL runner for PCM on Windows. This is independent of the Studio
+input form.
 
 ## An orbital or normal mode does not appear
 

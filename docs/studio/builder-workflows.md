@@ -91,8 +91,9 @@ only when the calculation exports frequencies and displacement vectors.
 PCM supports HF and DFT references. Select the SCF reference, solvent, model,
 dielectric constant, and cavity radii. The engine must have ddX support; an
 engine built without it reports `OpenQP was built without OQP_ENABLE_DDX`.
-Current `with-engine` packages are intended to include external ddX until the
-native implementation is available.
+Bundled macOS and Linux engines are intended to include external ddX until the
+native implementation is available. Native Windows builds currently reject
+ddX; use a ddX-enabled OpenQP installation through WSL for PCM on Windows.
 
 ## Generate and edit input
 
