@@ -4,6 +4,14 @@ OQP Studio is the desktop graphical interface for OpenQP. It prepares canonical
 `.oqp` inputs, runs a local or bundled OpenQP engine, keeps each calculation in
 a project directory, and presents molecular structures and calculated results.
 
+![OQP Studio Builder showing Cartesian coordinates for aniline and the corresponding three-dimensional molecular preview](../assets/studio/builder-aniline.png)
+
+*Build or import a molecular structure and inspect its three-dimensional preview.*
+
+![OQP Studio Analysis showing a selected SCF molecular orbital, isovalue and phase controls, and the three-dimensional orbital surface](../assets/studio/analysis-orbital.png)
+
+*Inspect calculated molecular orbitals and adjust their three-dimensional visualization.*
+
 This manual follows the current OQP Studio `main` branch. A released installer
 may expose a smaller set of controls; consult its release notes when a menu
 described here is absent.
