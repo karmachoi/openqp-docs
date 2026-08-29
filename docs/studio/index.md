@@ -18,6 +18,11 @@ The main window follows a five-step sequence:
 5. **Art** - render the selected molecular or volumetric result with progressive
    ray tracing.
 
+The screenshots in the following chapters use built-in molecular structures
+and representative calculation results. They show the complete five-step
+layout in OQP Studio 0.2.3; controls can move or expand as the interface
+evolves.
+
 ## Desktop architecture
 
 The installed application is a standalone Tauri desktop program. Its interface
