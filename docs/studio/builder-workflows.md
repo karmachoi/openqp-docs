@@ -22,6 +22,12 @@ Select **Update 3D preview** after editing coordinates. Multi-frame files expose
 a frame slider. The display and rendering controls change only the view, not
 the Cartesian coordinates used for calculation.
 
+![OQP Studio Builder showing Cartesian coordinates for aniline and the corresponding three-dimensional molecular preview](../assets/studio/builder-aniline.png)
+
+*The built-in aniline sample populates the editable Cartesian coordinates and
+the three-dimensional preview together. The numbered sidebar shows where
+Builder sits in the complete Studio sequence.*
+
 ### PDB and QM/MM
 
 A PDB structure is suitable for inspection, but should not be submitted as a

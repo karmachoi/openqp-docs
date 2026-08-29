@@ -70,6 +70,13 @@ export the sticks and curve as CSV.
 Selecting an orbital generates its surface; no orbital is shown until one is
 selected. **Reset map** returns to the molecule.
 
+![OQP Studio Analysis showing a selected SCF molecular orbital, isovalue and phase controls, and the three-dimensional orbital surface](../assets/studio/analysis-orbital.png)
+
+*Analysis links the selected orbital and its energy and occupation to the
+three-dimensional positive and negative phases. The isovalue, color pair,
+surface style, sign, and opacity controls change the visualization without
+changing the calculated orbital.*
+
 For an IP/EA job with a Dyson Molden file, **Dyson orbital** appears as a
 separate Show choice. Dyson orbitals are state specific and are labeled by IP
 or EA root and source state where available. OpenQP's Dyson `STRENGTH` is shown
