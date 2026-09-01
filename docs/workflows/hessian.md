@@ -67,8 +67,9 @@ The same-stem `.inp` file is retained for legacy use.
 
 The analytical excited-state Hessian is restricted to a closed-shell RHF
 reference, full-response singlet RPA, and the lowest excited state
-(`state=1`). The lowest state must be separated from the next calculated state
-by more than `1.0e-10` hartree. Canonical occupied and virtual orbital spaces
+(`state=1`). Set `[tdhf] nstate` to at least `2`; the lowest state must be
+separated from the second calculated state by more than `1.0e-10` hartree.
+Canonical occupied and virtual orbital spaces
 must also have no pair separated by `1.0e-10` hartree or less. These conditions
 avoid an arbitrary response within a degenerate state or orbital subspace.
 
@@ -86,7 +87,7 @@ Legacy `.inp`:
 [input]
 runtype=hess
 method=tdhf
-basis=sto-3g
+basis=6-31g
 
 [scf]
 type=rhf
@@ -96,7 +97,7 @@ conv=1.0e-10
 [tdhf]
 type=rpa
 multiplicity=1
-nstate=1
+nstate=2
 conv=1.0e-10
 zvconv=1.0e-10
 
@@ -112,8 +113,10 @@ JSON and the `.hess.json` frequency sidecar:
 - [`H2_RHF_RPA_ANA_HESS.inp`](https://github.com/Open-Quantum-Platform/openqp/blob/main/examples/HESS/H2_RHF_RPA_ANA_HESS.inp)
 - [`H2_RHF_RPA_NUM_HESS.inp`](https://github.com/Open-Quantum-Platform/openqp/blob/main/examples/HESS/H2_RHF_RPA_NUM_HESS.inp)
 
-For the committed STO-3G H2 references, the maximum absolute analytical versus
-numerical Hessian difference is approximately `5.7e-7` hartree/bohr².
+For the committed 6-31G H2 references, the analytical and numerical Hessians
+are compared directly in the example regression calculation. The calculated
+S1-S2 separation is `0.4996771` hartree, and the maximum absolute Hessian
+difference is approximately `9.0e-7` hartree/bohr².
 
 ## Numerical HF/DFT Hessian
 
@@ -223,7 +226,8 @@ The same-stem `.inp` file is retained for legacy use.
 - HF/DFT ground-state Hessians use `state=0`.
 - TDHF/TDDFT Hessian target states use positive excited-state indices.
 - Analytical TDHF/TDDFT Hessians currently require the lowest isolated singlet
-  state (`state=1`) of an RHF full-response RPA calculation and one MPI rank.
+  state (`state=1`) of an RHF full-response RPA calculation, at least two
+  calculated excited states (`nstate>=2`), and one MPI rank.
 - SF-TDDFT and MRSF-TDDFT use spin-flip/MRSF target-state ordering, where
   state `1` is the lowest target state.
 - `[hess] restart=True` can continue a numerical Hessian workflow where the

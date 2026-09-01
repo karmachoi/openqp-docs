@@ -19,8 +19,10 @@ Analytical Hessians are verified for supported HF/DFT ground-state cases and
 for the lowest isolated singlet state of restricted full-response TDHF and the
 verified TDDFT functionals. The TDHF/TDDFT analytical calculation requires
 `[scf] type=rhf`, `[tdhf] type=rpa`, `[tdhf] multiplicity=1`,
-`[hess] state=1`, nondegenerate canonical occupied and virtual orbital subspaces, and
-one MPI rank. Use `type=numerical` outside these conditions. See
+`[tdhf] nstate>=2`, `[hess] state=1`, nondegenerate canonical occupied and
+virtual orbital subspaces, and one MPI rank. At least two excited states are
+calculated so OpenQP can verify the separation between the first and second
+roots. Use `type=numerical` outside these conditions. See
 [Hessian and Frequencies](../workflows/hessian.md#analytical-tdhftddft-hessian)
 for the functional list and degeneracy criteria.
 
