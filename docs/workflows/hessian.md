@@ -1,8 +1,10 @@
 # Hessian and Frequencies
 
 Hessian workflows use `[input] runtype=hess` and are controlled by `[hess]`.
-OpenQP supports native analytical Hessians for supported HF/DFT ground-state
-cases and numerical Hessians for broader workflows.
+OpenQP supports analytical Hessians for supported HF/DFT ground states and for
+the lowest isolated singlet state of restricted TDHF and selected TDDFT
+functionals. Numerical Hessians remain available for broader method and state
+combinations.
 
 Frequency, IR, Raman, and thermochemistry analysis are built from Hessian data
 when the selected workflow produces the required derivatives.
@@ -60,6 +62,58 @@ clean=True
 Runnable `.oqp`:
 [`examples/HESS/H2O_RHF-DFT_ANA_HESS.oqp`](https://github.com/Open-Quantum-Platform/openqp/blob/main/examples/HESS/H2O_RHF-DFT_ANA_HESS.oqp).
 The same-stem `.inp` file is retained for legacy use.
+
+## Analytical TDHF/TDDFT Hessian
+
+The analytical excited-state Hessian is restricted to a closed-shell RHF
+reference, full-response singlet RPA, and the lowest excited state
+(`state=1`). The lowest state must be separated from the next calculated state
+by more than `1.0e-10` hartree. Canonical occupied and virtual orbital spaces
+must also have no pair separated by `1.0e-10` hartree or less. These conditions
+avoid an arbitrary response within a degenerate state or orbital subspace.
+
+The verified functional names are `SVWN`, `SVWN5`, `LDA`, `BLYP`, `PBE`,
+`PBEPBE`, `B3LYP5`, and `B3LYPV5`; an empty functional selects TDHF. `PBE` and
+`PBEPBE` are equivalent, as are `B3LYP5` and `B3LYPV5`. The bare `B3LYP` name
+is not accepted because it is not an unambiguous Libxc functional identifier.
+TDA, triplet targets, higher excited states, range-separated functionals,
+meta-GGA functionals, and calculations with more than one MPI rank must use a
+numerical Hessian.
+
+Legacy `.inp`:
+
+```ini
+[input]
+runtype=hess
+method=tdhf
+basis=sto-3g
+
+[scf]
+type=rhf
+multiplicity=1
+conv=1.0e-10
+
+[tdhf]
+type=rpa
+multiplicity=1
+nstate=1
+conv=1.0e-10
+zvconv=1.0e-10
+
+[hess]
+type=analytical
+state=1
+clean=True
+```
+
+The H2 analytical and numerical examples include both the primary regression
+JSON and the `.hess.json` frequency sidecar:
+
+- [`H2_RHF_RPA_ANA_HESS.inp`](https://github.com/Open-Quantum-Platform/openqp/blob/main/examples/HESS/H2_RHF_RPA_ANA_HESS.inp)
+- [`H2_RHF_RPA_NUM_HESS.inp`](https://github.com/Open-Quantum-Platform/openqp/blob/main/examples/HESS/H2_RHF_RPA_NUM_HESS.inp)
+
+For the committed STO-3G H2 references, the maximum absolute analytical versus
+numerical Hessian difference is approximately `5.7e-7` hartree/bohr².
 
 ## Numerical HF/DFT Hessian
 
@@ -168,6 +222,8 @@ The same-stem `.inp` file is retained for legacy use.
 
 - HF/DFT ground-state Hessians use `state=0`.
 - TDHF/TDDFT Hessian target states use positive excited-state indices.
+- Analytical TDHF/TDDFT Hessians currently require the lowest isolated singlet
+  state (`state=1`) of an RHF full-response RPA calculation and one MPI rank.
 - SF-TDDFT and MRSF-TDDFT use spin-flip/MRSF target-state ordering, where
   state `1` is the lowest target state.
 - `[hess] restart=True` can continue a numerical Hessian workflow where the
