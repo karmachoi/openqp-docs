@@ -78,12 +78,15 @@ The Python API exposes the keyword through
 | Used by | NMR shielding |
 
 A positive value selects a singlet TDA excited state with `method=tdhf`,
-`[tdhf] type=tda`, a closed-shell RHF reference, and `nmr_gauge=cgo`.
-The current implementation uses HF exchange; hybrid TDDFT and excited-state
-GIAO extensions are under development. This option does not currently support
-full TDDFT without the Tamm–Dancoff approximation. The excited-state tensors
+`[tdhf] type=tda`, a closed-shell RHF or RKS reference, and `nmr_gauge=cgo`.
+RKS supports LDA/GGA global hybrids, including PBE0 and BHHLYP. The response
+includes the exchange fraction, fxc, and the density derivative of fxc (kxc).
+Range-separated hybrids, meta-GGA functionals, excited-state GIAO, and full
+TDDFT without the Tamm–Dancoff approximation are not supported. The excited-state tensors
 are printed in ppm, with magnetic-field components as rows and nuclear magnetic
 moment components as columns, separately for diamagnetic and paramagnetic terms.
+The total shielding is their sum. To use PBE0 in the example below, add
+`functional=pbe0` under `[input]`.
 
 ```ini
 [input]
