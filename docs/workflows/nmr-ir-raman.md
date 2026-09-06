@@ -59,6 +59,43 @@ limited to closed-shell RHF; use `gauge="giao"` for open-shell UHF/ROHF
 references. The helper also blocks range-separated and meta-GGA functionals for
 NMR because those paths are not implemented.
 
+### TDA excited-state shielding
+
+The legacy input supports a singlet TDA excited state of a closed-shell RHF or
+RKS reference. For example, use these sections with a molecular geometry and
+basis under `[input]`:
+
+```ini
+[input]
+method=tdhf
+functional=pbe0
+
+[scf]
+type=rhf
+multiplicity=1
+
+[tdhf]
+type=tda
+nstate=3
+
+[properties]
+scf_prop=nmr
+nmr_gauge=giao
+nmr_state=1
+```
+
+The log prints all nine diamagnetic and paramagnetic tensor components for
+each nucleus in ppm. Add the two tensors to obtain total shielding. GIAO
+includes the London overlap, integral, and XC response terms; its total tensor
+is invariant under a rigid translation of the molecule. CGO is also supported;
+choose `nmr_gauge=cgo` and optionally `nmr_origin=atom:1` to place the common
+gauge origin at the first nucleus.
+
+LDA/GGA global hybrids are supported, including PBE0 and BHHLYP. Full TDDFT
+without TDA, MRSF, range-separated exchange, meta-GGA, and ECP magnetic
+derivatives are not included in this excited-state implementation. See
+[`nmr_state`](../keywords/properties.md#nmr_state) for the input requirements.
+
 ## IR and Raman
 
 IR and Raman intensities are produced from supported Hessian/frequency
