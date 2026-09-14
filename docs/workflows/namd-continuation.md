@@ -56,3 +56,49 @@ received a large kinetic-energy correction is not an acceptance criterion.
 If smaller steps fail to stabilize the result, examine reference continuity,
 orbital-response conditioning, and electronic-state identity. Force clipping or
 response damping changes the derivative and is not a substitute for this check.
+
+## Recovery after SCF or energy-conservation failure
+
+Use `mo_reuse=true,scf_fail=escalate,scf_guess_retry=true` to permit one
+fresh-guess SCF retry after the continuation convergers fail. The recovered
+reference must satisfy the original SCF criterion. A fresh guess alone does
+not establish a reference change.
+
+If the resulting nuclear step exceeds the energy-conservation criterion,
+keep the last accepted checkpoint and repeat the interval at half the time
+step using the continuation procedure above. Each smaller step includes
+SCF, the gradient, analytic NAC when requested, electronic propagation, and
+hopping. Do not restart from the failed diagnostic record or correct the
+energy by rescaling velocities before refinement is exhausted. Assess the smaller-step result against the
+same convergence and energy criteria before continuing.
+
+The continuation interface prepares these retries in separate output paths;
+it is not an automatic same-spin adaptive-time-step controller. A bounded
+minimum dt and retry count should be chosen for each investigation; failure
+at that limit requires further analysis rather than acceptance of the step.
+
+### Bounded nuclear refinement before numerical energy correction
+
+Within a full nuclear interval, `disc_substeps` is the maximum number of
+velocity-Verlet subdivisions. Energy recovery tries 2, 4, 8, ... subdivisions,
+including the configured maximum once, and stops as soon as the remaining
+energy change satisfies `disc_tol` (or the tighter enabled NVE step criterion).
+SCF and the active-state force are recomputed at each subdivision. Electronic
+amplitudes and hopping are propagated once over the full interval; use the
+separate smaller-`dt` continuation procedure above when every electronic and
+hopping step must also be refined.
+
+Each trial restores the preceding coordinates, velocities, electronic data,
+and coupling histories. `disc_rescale` or `ref_switch_rescale` permits a
+numerical kinetic-energy correction only after all configured subdivisions
+fail the energy criterion and SCF is converged. Enabling either correction
+ensures a minimum of two subdivisions, even if `disc_substeps` is zero or one.
+A missing previous state prevents numerical correction. Insufficient kinetic
+energy also prevents rescaling; the configured NVE acceptance criterion still
+applies. These options do not suppress an unconverged SCF or guarantee completion.
+
+The log records SCF retry reasons and the fresh-guess outcome, the subdivision
+count and time step, initial and remaining energy changes, the applicable
+criterion, and whether correction was avoided or required. A last-resort
+correction additionally records kinetic energies, the velocity factor, and
+energy transferred, separately from a physical surface hop.

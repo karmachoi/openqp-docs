@@ -764,3 +764,30 @@ the time of the saved state.
 
 See [smaller-step NAMD continuation](../workflows/namd-continuation.md) for the
 input procedure and interpretation of time-step comparisons.
+
+## `scf_guess_retry`
+
+Boolean, default `true`. With `mo_reuse=true` and `scf_fail=escalate`,
+a failed SCF continuation is retried once from a fresh Huckel guess using
+DIIS followed by SOSCF/TRAH as needed. The same geometry, electronic model,
+and convergence thresholds are retained. Temporary converger and guess
+settings are restored after the attempt. Set `false` to stop after the
+continuation SCF fails. The separate `scf_fail=restart` mode retains its
+explicit restart treatment.
+
+A fresh guess is an SCF recovery procedure, not evidence of a reference
+switch. State and orbital overlaps determine continuity. Only a converged
+reference may supply forces; a second SCF failure still stops propagation.
+Energy-conservation checks are independent and are not disabled by this
+option. No option can guarantee completion for every geometry.
+
+```text
+namd(S1,nstep=1,mo_reuse=true,scf_fail=escalate,scf_guess_retry=true)
+```
+
+Numerical energy recovery tries increasing subdivisions up to `disc_substeps`
+before applying an enabled `disc_rescale` or `ref_switch_rescale` correction.
+Either correction enforces at least two subdivisions. Every substep recomputes
+SCF and forces; electronic propagation and hopping retain the full interval.
+SCF convergence remains mandatory. See [NAMD continuation](../workflows/namd-continuation.md)
+for full smaller-time-step continuation and recovery log details.
