@@ -69,6 +69,7 @@ nav:
       - Spin-Orbit Coupling: workflows/soc.md
       - NACME: workflows/nacme.md
       - SOC-NAMD-QMMM: workflows/soc-namd-qmmm.md
+      - Smaller-step NAMD Continuation: workflows/namd-continuation.md
       - PCM/ddX: workflows/pcm.md
       - MRSF-EKT: workflows/ekt.md
       - NMR, IR, and Raman: workflows/nmr-ir-raman.md

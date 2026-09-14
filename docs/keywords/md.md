@@ -740,3 +740,27 @@ job.workflow.namd(soc=True, soc_basis="mch", nstep=200, dt=0.5,
 
 mol = job.run()
 ```
+
+## `continuation_checkpoint` and `continuation_trajectory`
+
+These optional string paths start a **new trajectory at a smaller fixed nuclear
+time step** from a validated NAMD checkpoint and its matching packed trajectory.
+Both paths are required together. They are available in the local-continuation
+implementation; use a build containing that change.
+
+The initial implementation supports gas-phase, same-spin NAMD with `tdc=analytic`.
+It does not enable general adaptive time stepping, SOC, QM/MM, or a change of
+electronic model. Keep SCF, response, state count, hopping, and RNG settings equal
+to the source calculation. The only permitted signature difference is a strictly
+smaller positive `dt`. Do not combine these options with `restart=true`.
+
+Choose new output paths for the trajectory, checkpoint, and restart manifest.
+The source files remain unchanged, including any failed records after the last
+accepted checkpoint. Coordinates, velocities, acceleration, complex electronic
+coefficients, orbital/state history, and random-number progress are restored.
+`nstep` remains the final absolute step index, not the number of additional steps.
+The physical time origin is adjusted and stored so reducing `dt` does not reset
+the time of the saved state.
+
+See [smaller-step NAMD continuation](../workflows/namd-continuation.md) for the
+input procedure and interpretation of time-step comparisons.
