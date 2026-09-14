@@ -102,3 +102,23 @@ count and time step, initial and remaining energy changes, the applicable
 criterion, and whether correction was avoided or required. A last-resort
 correction additionally records kinetic energies, the velocity factor, and
 energy transferred, separately from a physical surface hop.
+
+
+### Return to the original time step
+
+After the difficult region, use another explicit continuation into new outputs
+with a larger dt, no greater than the original dt recorded in the continuation
+history. This preserves physical time and the saved electronic/nuclear state;
+it does not edit the source checkpoint. Normal restart still requires identical
+dt. Check energy changes on the following uncorrected steps before concluding
+that the normal step size is adequate.
+
+After automatic nuclear subdivision and an optional last-resort correction,
+the next outer interval already uses the configured dt. The same energy checks
+and subdivision procedure remain active. Numerical correction is reported
+separately from the physical-hop energy residual, so the hop tolerance does
+not incorrectly reject an intentionally corrected non-hopping step. Both the
+ordinary stepwise and cumulative NVE criteria remain active. The log also gives
+the relative kinetic-energy change and states which dt is tried next.
+`disc_tol` is a refinement trigger, not an upper bound on correction magnitude;
+there is no universal 0.5 eV acceptance rule.
